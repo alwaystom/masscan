@@ -15,3 +15,24 @@ jobs:
     - uses: actions/checkout@v4
     - name: make
       run: make
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref_name }}
+        release_name: Release ${{ github.ref_name }}
+        body: |
+          Changes in this release:
+          - Updated the C program.
+    - name: Upload Release Asset
+      id: upload_asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: my_program
+        asset_name: my_program
+        asset_content_type: application/octet-stream
