@@ -33,6 +33,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: my_program
+        asset_path: ./bin/masscan
         asset_name: my_program
         asset_content_type: application/octet-stream
